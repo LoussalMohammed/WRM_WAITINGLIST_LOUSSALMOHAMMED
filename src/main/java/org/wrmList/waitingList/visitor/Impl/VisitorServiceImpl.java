@@ -1,5 +1,6 @@
 package org.wrmList.waitingList.visitor.Impl;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,7 @@ import org.wrmList.waitingList.visitor.service.VisitorService;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class VisitorServiceImpl implements VisitorService {
     private final CreateVisitorMapper createMapper;
     private final ResponseVisitorMapper responseMapper;

@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: waitingList
+
+  datasource:
+    url: jdbc:postgresql://postgres:5432/testWaitinglist
+    username: mohammed
+    password: superman
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+#  spring.application.name=waitingList
+#
+#  spring.datasource.url=jdbc:postgresql://localhost:5433/waitingList
+#  spring.datasource.username=mohammed
+#  spring.datasource.password=superman
+#
+#  spring.data.jpa.repositories.enabled=true
+#  spring.jpa.hibernate.ddl-auto=update
+#  spring.jpa.show-sql=true
+#  spring.jpa.properties.hibernate.format_sql=
+#  spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+#  spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect

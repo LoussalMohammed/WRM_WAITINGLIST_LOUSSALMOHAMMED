@@ -8,4 +8,5 @@ import org.wrmList.waitingList.visitor.dto.UpdateVisitorDTO;
 
 @Service
 public interface VisitorService extends BaseService<Long, CreateVisitorDTO, UpdateVisitorDTO, ResponseVisitorDTO> {
+
 }

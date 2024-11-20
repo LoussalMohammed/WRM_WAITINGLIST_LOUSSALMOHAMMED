@@ -26,4 +26,6 @@ public class VisitorController extends BaseController<Visitor, Long, CreateVisit
     public Class<Visitor> getEntityClass() {
         return Visitor.class;
     }
+
+    
 }

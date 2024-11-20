@@ -10,7 +10,9 @@ import org.wrmList.waitingList.common.service.BaseService;
 import org.wrmList.waitingList.shared.dto.PageDTO;
 import org.wrmList.waitingList.util.annotation.IdExists;
 
+@RequestMapping
 @RestController
+@Validated
 public abstract class BaseController<E, ID, CreateDTO, UpdateDTO, ResponseDTO> {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseController.class);
