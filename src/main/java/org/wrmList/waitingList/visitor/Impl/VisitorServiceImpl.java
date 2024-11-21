@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.wrmList.waitingList.shared.dto.PageDTO;
+import org.wrmList.waitingList.shared.dto.response.PageResponse;
 import org.wrmList.waitingList.visitor.dto.ResponseVisitorDTO;
 import org.wrmList.waitingList.visitor.entity.Visitor;
 import org.wrmList.waitingList.visitor.dto.CreateVisitorDTO;
@@ -15,6 +15,9 @@ import org.wrmList.waitingList.visitor.mapper.CreateVisitorMapper;
 import org.wrmList.waitingList.visitor.mapper.ResponseVisitorMapper;
 import org.wrmList.waitingList.visitor.repository.VisitorRepository;
 import org.wrmList.waitingList.visitor.service.VisitorService;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -33,10 +36,19 @@ public class VisitorServiceImpl implements VisitorService {
     }
 
     @Override
-    public PageDTO<ResponseVisitorDTO> findAll(Pageable pageable) {
-        Page<Visitor> visitorPage = visitorRepository.findAll(pageable);
-        Page<ResponseVisitorDTO> responsePage = visitorPage.map(responseMapper::toOT);
-        return PageDTO.of(responsePage);
+    public PageResponse<ResponseVisitorDTO> findAll(Pageable pageable, Map<String, String> filters) {
+        Page<Visitor> page = visitorRepository.findAll(pageable);
+        List<ResponseVisitorDTO> items = page.getContent()
+                .stream()
+                .map(responseMapper::toOT)
+                .toList();
+        return PageResponse.of(
+                items,
+                page.getNumber(),
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages()
+        );
     }
 
     @Override

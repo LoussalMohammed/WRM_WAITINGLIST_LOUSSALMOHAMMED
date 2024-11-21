@@ -1,6 +1,5 @@
 package org.wrmList.waitingList.visitorWaitingList.controller;
 
-import jakarta.persistence.Id;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.web.PageableDefault;
@@ -9,7 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.wrmList.waitingList.common.controller.BaseController;
 import org.wrmList.waitingList.common.service.BaseService;
-import org.wrmList.waitingList.shared.dto.PageDTO;
+import org.wrmList.waitingList.shared.dto.response.PageResponse;
 import org.wrmList.waitingList.util.annotation.IdExists;
 import org.wrmList.waitingList.visitorWaitingList.dto.CreateVisitorWaitingListDTO;
 import org.wrmList.waitingList.visitorWaitingList.dto.ResponseVisitorWaitingListDTO;
@@ -69,19 +68,19 @@ public class VisitorWaitingList extends BaseController<VisitorWaitingList, Long,
     }
 
     @GetMapping("/orderByArrivalTime")
-    public ResponseEntity<PageDTO<ResponseVisitorWaitingListDTO>> getAllOrderByArrivalTime(
+    public ResponseEntity<PageResponse<ResponseVisitorWaitingListDTO>> getAllOrderByArrivalTime(
             @PageableDefault(size = 10, sort = "arrivalTime", direction = Sort.Direction.ASC) Pageable pageable) {
         return ResponseEntity.ok(visitorWaitingListService.findAllOrderByArrivalTimeAsc(pageable));
     }
 
     @GetMapping("/orderByPriority")
-    public ResponseEntity<PageDTO<ResponseVisitorWaitingListDTO>> getAllOrderByPriority(
+    public ResponseEntity<PageResponse<ResponseVisitorWaitingListDTO>> getAllOrderByPriority(
             @PageableDefault(size = 10, sort = "priority", direction = Sort.Direction.ASC) Pageable pageable) {
         return ResponseEntity.ok(visitorWaitingListService.findAllOrderByPriorityAsc(pageable));
     }
 
     @GetMapping("/orderByEpt")
-    public ResponseEntity<PageDTO<ResponseVisitorWaitingListDTO>> getAllOrderByEpt(
+    public ResponseEntity<PageResponse<ResponseVisitorWaitingListDTO>> getAllOrderByEpt(
             @PageableDefault(size = 10, sort = "ept", direction = Sort.Direction.ASC) Pageable pageable) {
         return ResponseEntity.ok(visitorWaitingListService.findAllOrderByEptAsc(pageable));
     }

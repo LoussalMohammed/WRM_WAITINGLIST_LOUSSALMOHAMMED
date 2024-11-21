@@ -1,4 +1,4 @@
-package org.wrmList.waitingList.shared.dto;
+package org.wrmList.waitingList.shared.dto.response;
 
 import java.time.LocalDateTime;
 

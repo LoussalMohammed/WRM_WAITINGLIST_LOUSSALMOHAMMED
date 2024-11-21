@@ -1,15 +1,17 @@
 spring:
+  profiles:
+    active: test
   application:
     name: waitingList
 
-  datasource:
-    url: jdbc:postgresql://postgres:5432/testWaitinglist
-    username: mohammed
-    password: superman
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+  #datasource:
+   # url: jdbc:postgresql://postgres:5432/waitinglist
+    #username: mohammed
+    #password: superman
+  #jpa:
+    #hibernate:
+      #ddl-auto: update
+    #show-sql: true
 
 #  spring.application.name=waitingList
 #

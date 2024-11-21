@@ -9,7 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.wrmList.waitingList.shared.dto.ErrorDTO;
+import org.wrmList.waitingList.shared.dto.response.ErrorDTO;
 import org.wrmList.waitingList.shared.exception.InvalidRelationshipException;
 import org.wrmList.waitingList.shared.exception.ResourceNotFoundException;
 import org.wrmList.waitingList.shared.exception.ValidationException;

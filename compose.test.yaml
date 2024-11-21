@@ -3,30 +3,30 @@ services:
     container_name: waitinglist-db
     image: 'postgres:15'
     environment:
-      - 'POSTGRES_DB=waitingList'
+      - 'POSTGRES_DB=testWaitingList'
       - 'POSTGRES_PASSWORD=superman'
       - 'POSTGRES_USER=mohammed'
     ports:
       - '5433:5432'
     networks:
       - spring-postgres
-    volumes:
-      - type: volume
-        source: postgres-data
-        target: /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mohammed -d testWaitingList"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 #  app:
-#    container_name: waitinglist-app
+#    container_name: test_waiting_list-app
 #    build: .
 #    ports:
-#      - "8080:8081"
+#      - "8080:8080"
 #    depends_on:
 #      - postgres
 #    environment:
 #      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/waitingList
 #      - SPRING_DATASOURCE_USERNAME=mohammed
 #      - SPRING_DATASOURCE_PASSWORD=superman
-#      - SPRING_PROFILES_ACTIVE=docker
 #    networks:
 #      - spring-postgres
 
@@ -35,6 +35,3 @@ networks:
     name: spring-postgres
     driver: bridge
 
-volumes:
-  postgres-data:
-    name: postgres-data

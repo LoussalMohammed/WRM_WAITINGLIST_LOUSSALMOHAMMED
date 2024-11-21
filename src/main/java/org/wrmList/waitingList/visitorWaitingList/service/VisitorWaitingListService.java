@@ -2,12 +2,11 @@ package org.wrmList.waitingList.visitorWaitingList.service;
 
 import org.springframework.data.domain.Pageable;
 import org.wrmList.waitingList.common.service.BaseService;
-import org.wrmList.waitingList.shared.dto.PageDTO;
+import org.wrmList.waitingList.shared.dto.response.PageResponse;
 import org.wrmList.waitingList.visitorWaitingList.dto.CreateVisitorWaitingListDTO;
 import org.wrmList.waitingList.visitorWaitingList.dto.ResponseVisitorWaitingListDTO;
 import org.wrmList.waitingList.visitorWaitingList.dto.UpdateVisitorWaitingListDTO;
 import org.wrmList.waitingList.visitorWaitingList.entity.embeddable.VisitKey;
-import org.wrmList.waitingList.waitingList.entity.WaitingList;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -22,7 +21,7 @@ public interface VisitorWaitingListService extends BaseService<Long, CreateVisit
     ResponseVisitorWaitingListDTO setCanceled(VisitKey id);
     LocalTime getAverageTime(Long id);
     List<ResponseVisitorWaitingListDTO> findByWaitingListId(Long id);
-    PageDTO<ResponseVisitorWaitingListDTO> findAllOrderByArrivalTimeAsc(Pageable pageable);
-    PageDTO<ResponseVisitorWaitingListDTO> findAllOrderByPriorityAsc(Pageable pageable);
-    PageDTO<ResponseVisitorWaitingListDTO> findAllOrderByEptAsc(Pageable pageable);
+    PageResponse<ResponseVisitorWaitingListDTO> findAllOrderByArrivalTimeAsc(Pageable pageable);
+    PageResponse<ResponseVisitorWaitingListDTO> findAllOrderByPriorityAsc(Pageable pageable);
+    PageResponse<ResponseVisitorWaitingListDTO> findAllOrderByEptAsc(Pageable pageable);
 }

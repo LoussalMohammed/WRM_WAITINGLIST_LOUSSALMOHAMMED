@@ -7,9 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import org.wrmList.waitingList.shared.dto.PageDTO;
+import org.wrmList.waitingList.shared.dto.response.PageResponse;
 import org.wrmList.waitingList.shared.exception.InvalidDataException;
-import org.wrmList.waitingList.util.enums.OrderingStrategy;
 import org.wrmList.waitingList.util.enums.ServiceTime;
 import org.wrmList.waitingList.util.enums.VisitorStatus;
 import org.wrmList.waitingList.visitor.entity.Visitor;
@@ -28,9 +27,9 @@ import org.wrmList.waitingList.waitingList.repository.WaitingListRepository;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -118,12 +117,21 @@ public class VisitorWaitingListServiceImpl implements VisitorWaitingListService 
     }
 
     @Override
-    public PageDTO<ResponseVisitorWaitingListDTO> findAll(Pageable pageable) {
-        Page<VisitorWaitingList> visitorWaitingListPage = visitorWaitingListRepository.findAll(pageable);
-        Page<ResponseVisitorWaitingListDTO> responsePage = visitorWaitingListPage.map(responseMapper::toOT);
-        return PageDTO.of(responsePage);
-    }
-
+    public PageResponse<ResponseVisitorWaitingListDTO> findAll(Pageable pageable, Map<String, String> filters) {
+        Page<VisitorWaitingList> page = visitorWaitingListRepository.findAll(pageable);
+        List<ResponseVisitorWaitingListDTO> items = page.getContent()
+            .stream()
+            .map(responseMapper::toOT)
+            .toList();
+            
+        return PageResponse.of(
+            items,
+            page.getNumber(),
+            page.getSize(),
+            page.getTotalElements(),
+            page.getTotalPages()
+    );
+}
     @Override
     public ResponseVisitorWaitingListDTO findById(Long id) {
         return null;
@@ -269,23 +277,23 @@ public class VisitorWaitingListServiceImpl implements VisitorWaitingListService 
 
 
     @Override
-    public PageDTO<ResponseVisitorWaitingListDTO> findAllOrderByArrivalTimeAsc(Pageable pageable) {
+    public PageResponse<ResponseVisitorWaitingListDTO> findAllOrderByArrivalTimeAsc(Pageable pageable) {
         Page<VisitorWaitingList> visitorWaitingListPage = visitorWaitingListRepository.findAllByOrderByArrivalTimeAsc(pageable);
         Page<ResponseVisitorWaitingListDTO> responsePage = visitorWaitingListPage.map(responseMapper::toOT);
-        return PageDTO.of(responsePage);
+        return PageResponse.from(responsePage);
     }
 
     @Override
-    public PageDTO<ResponseVisitorWaitingListDTO> findAllOrderByPriorityAsc(Pageable pageable) {
+    public PageResponse<ResponseVisitorWaitingListDTO> findAllOrderByPriorityAsc(Pageable pageable) {
         Page<VisitorWaitingList> visitorWaitingListPage = visitorWaitingListRepository.findAllByPriorityIsNotNullOrderByPriorityAsc(pageable);
         Page<ResponseVisitorWaitingListDTO> responsePage = visitorWaitingListPage.map(responseMapper::toOT);
-        return PageDTO.of(responsePage);
+        return PageResponse.from(responsePage);
     }
 
     @Override
-    public PageDTO<ResponseVisitorWaitingListDTO> findAllOrderByEptAsc(Pageable pageable) {
+    public PageResponse<ResponseVisitorWaitingListDTO> findAllOrderByEptAsc(Pageable pageable) {
         Page<VisitorWaitingList> visitorWaitingListPage = visitorWaitingListRepository.findAllByEptIsNotNullOrderByEptAsc(pageable);
         Page<ResponseVisitorWaitingListDTO> responsePage = visitorWaitingListPage.map(responseMapper::toOT);
-        return PageDTO.of(responsePage);
+        return PageResponse.from(responsePage);
     }
 }

@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.wrmList.waitingList.shared.dto.PageDTO;
+import org.wrmList.waitingList.shared.dto.response.PageResponse;
 import org.wrmList.waitingList.waitingList.dto.CreateWaitingListDTO;
 import org.wrmList.waitingList.waitingList.dto.ResponseWaitingListDTO;
 import org.wrmList.waitingList.waitingList.dto.UpdateWaitingListDTO;
@@ -15,6 +15,9 @@ import org.wrmList.waitingList.waitingList.mapper.CreateWaitingListMapper;
 import org.wrmList.waitingList.waitingList.mapper.ResponseWaitingListMapper;
 import org.wrmList.waitingList.waitingList.repository.WaitingListRepository;
 import org.wrmList.waitingList.waitingList.service.WaitingListService;
+
+import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -33,10 +36,19 @@ public class WaitingListServiceImpl implements WaitingListService {
     }
 
     @Override
-    public PageDTO<ResponseWaitingListDTO> findAll(Pageable pageable) {
-        Page<WaitingList> waitingListPage = waitingListRepository.findAll(pageable);
-        Page<ResponseWaitingListDTO> responsePage = waitingListPage.map(responseWaitingListMapper::toOT);
-        return PageDTO.of(responsePage);
+    public PageResponse<ResponseWaitingListDTO> findAll(Pageable pageable, Map<String, String> filters) {
+        Page<WaitingList> page = waitingListRepository.findAll(pageable);
+        List<ResponseWaitingListDTO> items = page.getContent()
+                .stream()
+                .map(responseWaitingListMapper::toOT)
+                .toList();
+        return PageResponse.of(
+                items,
+                page.getNumber(),
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages()
+        );
     }
 
     @Override
