@@ -22,9 +22,4 @@ public interface VisitorWaitingListRepository extends JpaRepository<VisitorWaiti
     List<VisitorWaitingList> findByWaitingListOrderByPriorityAsc(WaitingList waitingList);
     List<VisitorWaitingList> findByWaitingListOrderByEptAsc(WaitingList waitingList);
 
-    Page<VisitorWaitingList> findAllByOrderByArrivalTimeAsc(Pageable spageable);
-    
-    Page<VisitorWaitingList> findAllByPriorityIsNotNullOrderByPriorityAsc(Pageable pageable);
-    
-    Page<VisitorWaitingList> findAllByEptIsNotNullOrderByEptAsc(Pageable pageable);
-}
+  }

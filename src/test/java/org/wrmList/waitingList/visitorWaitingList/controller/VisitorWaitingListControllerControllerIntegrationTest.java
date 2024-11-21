@@ -19,12 +19,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class VisitorWaitingListControllerIntegrationTest {
+class VisitorWaitingListControllerControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
+    @Autowireddd
     private VisitorWaitingListRepository visitorWaitingListRepository;
 
     @Autowired
@@ -64,15 +64,5 @@ class VisitorWaitingListControllerIntegrationTest {
                 .param("sortBy", "arrivalTime")
                 .param("sortDirection", "asc"))
                 .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void shouldReturnOrderedByPriority() throws Exception {
-        mockMvc.perform(get("/api/v1/visitorWaitingList/orderByPriority")
-                .param("page", "0")
-                .param("size", "10"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.items").isArray())
-                .andExpect(jsonPath("$.page").value(0));
     }
 } 

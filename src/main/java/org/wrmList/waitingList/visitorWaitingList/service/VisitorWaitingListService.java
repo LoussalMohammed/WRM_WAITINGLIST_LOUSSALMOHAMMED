@@ -14,14 +14,12 @@ import java.util.List;
 
 public interface VisitorWaitingListService extends BaseService<Long, CreateVisitorWaitingListDTO, UpdateVisitorWaitingListDTO, ResponseVisitorWaitingListDTO> {
     ResponseVisitorWaitingListDTO findById(VisitKey id);
-    ResponseVisitorWaitingListDTO updateById(UpdateVisitorWaitingListDTO updateVisitorWaitingListDTO, VisitKey id);
+    ResponseVisitorWaitingListDTO updateById(UpdateVisitorWaitingListDTO updateVisitorWaitingListDTO, Long id);
+    ResponseVisitorWaitingListDTO updateById(UpdateVisitorWaitingListDTO updateVisitorWaitingListDTO);
     void deleteById(VisitKey id);
     ResponseVisitorWaitingListDTO setInProgressById(VisitKey id);
     ResponseVisitorWaitingListDTO setDone(VisitKey id);
     ResponseVisitorWaitingListDTO setCanceled(VisitKey id);
     LocalTime getAverageTime(Long id);
     List<ResponseVisitorWaitingListDTO> findByWaitingListId(Long id);
-    PageResponse<ResponseVisitorWaitingListDTO> findAllOrderByArrivalTimeAsc(Pageable pageable);
-    PageResponse<ResponseVisitorWaitingListDTO> findAllOrderByPriorityAsc(Pageable pageable);
-    PageResponse<ResponseVisitorWaitingListDTO> findAllOrderByEptAsc(Pageable pageable);
-}
+    }

@@ -58,6 +58,7 @@ public class VisitorWaitingListServiceImpl implements VisitorWaitingListService 
 
         isValidDate(visitorWaitingList);
         isValidTime(visitorWaitingList);
+        isValidTimeDifference(visitorWaitingList);
 
     }
 
@@ -86,6 +87,7 @@ public class VisitorWaitingListServiceImpl implements VisitorWaitingListService 
                 }
             }
         }
+
     }
 
     void isValidDate(VisitorWaitingList visitorWaitingList) {
@@ -94,6 +96,12 @@ public class VisitorWaitingListServiceImpl implements VisitorWaitingListService 
 
         if(!visitorWaitingListDate.isEqual(waitingListDate)) {
             throw new InvalidDataException("Arrival date is not allowed!");
+        }
+    }
+
+    void isValidTimeDifference(VisitorWaitingList visitorWaitingList) {
+        if(!visitorWaitingList.getArrivalTime().toLocalTime().isBefore(visitorWaitingList.getStartTime()) && !visitorWaitingList.getEndTime().isAfter(visitorWaitingList.getStartTime())) {
+            throw new InvalidDataException("arrival time should not surpass start time, and start time should not surpass end time!");
         }
     }
 
@@ -138,19 +146,20 @@ public class VisitorWaitingListServiceImpl implements VisitorWaitingListService 
     }
 
     @Override
-    public ResponseVisitorWaitingListDTO updateById(UpdateVisitorWaitingListDTO updateDTO, Long id) {
-        return null;
-    }
-
-    @Override
     public ResponseVisitorWaitingListDTO findById(VisitKey id) {
         VisitorWaitingList visitorWaitingList = visitorWaitingListRepository.findByIdOrThrow(id);
         return responseMapper.toOT(visitorWaitingList);
     }
 
     @Override
-    public ResponseVisitorWaitingListDTO updateById(UpdateVisitorWaitingListDTO updateDTO, VisitKey id) {
-        VisitorWaitingList visitorWaitingList = visitorWaitingListRepository.findByIdOrThrow(id);
+    public ResponseVisitorWaitingListDTO updateById(UpdateVisitorWaitingListDTO updateVisitorWaitingListDTO, Long id) {
+        return null;
+    }
+
+    @Override
+    public ResponseVisitorWaitingListDTO updateById(UpdateVisitorWaitingListDTO updateDTO) {
+        VisitKey visitKey = new VisitKey(updateDTO.visitorId(), updateDTO.waitingListId());
+        VisitorWaitingList visitorWaitingList = visitorWaitingListRepository.findByIdOrThrow(visitKey);
         if(updateDTO.arrivalTime() != null) {
             visitorWaitingList.setArrivalTime(updateDTO.arrivalTime());
         }
@@ -167,10 +176,14 @@ public class VisitorWaitingListServiceImpl implements VisitorWaitingListService 
             Visitor visitor = visitorRepository.findByIdOrThrow(updateDTO.visitorId());
             visitorWaitingList.setVisitor(visitor);
         }
-        if(updateDTO.waitingListId() != null) {
-            WaitingList waitingList = waitingListRepository.findByIdOrThrow(updateDTO.waitingListId());
-            visitorWaitingList.setWaitingList(waitingList);
+        if(visitorWaitingList.getPriority() != null && updateDTO.priority() != null) {
+            visitorWaitingList.setPriority(updateDTO.priority());
         }
+        if(visitorWaitingList.getEpt() != null && updateDTO.ept() != null) {
+            visitorWaitingList.setEpt(updateDTO.ept());
+        }
+
+        isValidTimeDifference(visitorWaitingList);
         visitorWaitingListRepository.save(visitorWaitingList);
         return responseMapper.toOT(visitorWaitingList);
     }
@@ -179,6 +192,7 @@ public class VisitorWaitingListServiceImpl implements VisitorWaitingListService 
     public void deleteById(Long id) {
 
     }
+
 
     @Override
     public void deleteById(VisitKey id) {
@@ -275,25 +289,4 @@ public class VisitorWaitingListServiceImpl implements VisitorWaitingListService 
                 .toList();
     }
 
-
-    @Override
-    public PageResponse<ResponseVisitorWaitingListDTO> findAllOrderByArrivalTimeAsc(Pageable pageable) {
-        Page<VisitorWaitingList> visitorWaitingListPage = visitorWaitingListRepository.findAllByOrderByArrivalTimeAsc(pageable);
-        Page<ResponseVisitorWaitingListDTO> responsePage = visitorWaitingListPage.map(responseMapper::toOT);
-        return PageResponse.from(responsePage);
-    }
-
-    @Override
-    public PageResponse<ResponseVisitorWaitingListDTO> findAllOrderByPriorityAsc(Pageable pageable) {
-        Page<VisitorWaitingList> visitorWaitingListPage = visitorWaitingListRepository.findAllByPriorityIsNotNullOrderByPriorityAsc(pageable);
-        Page<ResponseVisitorWaitingListDTO> responsePage = visitorWaitingListPage.map(responseMapper::toOT);
-        return PageResponse.from(responsePage);
-    }
-
-    @Override
-    public PageResponse<ResponseVisitorWaitingListDTO> findAllOrderByEptAsc(Pageable pageable) {
-        Page<VisitorWaitingList> visitorWaitingListPage = visitorWaitingListRepository.findAllByEptIsNotNullOrderByEptAsc(pageable);
-        Page<ResponseVisitorWaitingListDTO> responsePage = visitorWaitingListPage.map(responseMapper::toOT);
-        return PageResponse.from(responsePage);
-    }
 }
