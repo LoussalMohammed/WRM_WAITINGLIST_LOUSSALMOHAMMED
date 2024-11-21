@@ -24,7 +24,7 @@ class VisitorWaitingListControllerControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowireddd
+    @Autowired
     private VisitorWaitingListRepository visitorWaitingListRepository;
 
     @Autowired
