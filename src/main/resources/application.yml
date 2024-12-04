@@ -3,6 +3,9 @@ spring:
     active: dev
   application:
     name: waitingList
+default:
+  capacity: ${DEFAULT_CAPACITY:20}
+  ordering-strategy: ${DEFAULT_ALGO:FIFO}
 
   #datasource:
    # url: jdbc:postgresql://postgres:5432/waitinglist

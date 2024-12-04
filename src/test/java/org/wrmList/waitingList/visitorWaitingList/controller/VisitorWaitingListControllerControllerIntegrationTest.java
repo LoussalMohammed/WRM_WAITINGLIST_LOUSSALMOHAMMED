@@ -54,6 +54,7 @@ class VisitorWaitingListControllerControllerIntegrationTest {
                 .andExpect(jsonPath("$.size").value(10))
                 .andExpect(jsonPath("$.totalElements").isNumber())
                 .andExpect(jsonPath("$.totalPages").isNumber());
+
     }
 
     @Test

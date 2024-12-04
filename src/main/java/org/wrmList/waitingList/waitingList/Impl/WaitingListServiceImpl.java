@@ -6,13 +6,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.wrmList.waitingList.config.AppConfig;
 import org.wrmList.waitingList.shared.dto.response.PageResponse;
-import org.wrmList.waitingList.waitingList.dto.CreateWaitingListDTO;
-import org.wrmList.waitingList.waitingList.dto.ResponseWaitingListDTO;
-import org.wrmList.waitingList.waitingList.dto.UpdateWaitingListDTO;
+import org.wrmList.waitingList.util.enums.OrderingStrategy;
+import org.wrmList.waitingList.waitingList.dto.request.CreateWaitingListDTO;
+import org.wrmList.waitingList.waitingList.dto.response.ResponseWaitingListDTO;
+import org.wrmList.waitingList.waitingList.dto.request.UpdateWaitingListDTO;
 import org.wrmList.waitingList.waitingList.entity.WaitingList;
-import org.wrmList.waitingList.waitingList.mapper.CreateWaitingListMapper;
-import org.wrmList.waitingList.waitingList.mapper.ResponseWaitingListMapper;
+import org.wrmList.waitingList.waitingList.mapper.request.CreateWaitingListMapper;
+import org.wrmList.waitingList.waitingList.mapper.response.ResponseWaitingListMapper;
 import org.wrmList.waitingList.waitingList.repository.WaitingListRepository;
 import org.wrmList.waitingList.waitingList.service.WaitingListService;
 
@@ -27,10 +29,15 @@ public class WaitingListServiceImpl implements WaitingListService {
     private final CreateWaitingListMapper createWaitingListMapper;
     private final ResponseWaitingListMapper responseWaitingListMapper;
     private final WaitingListRepository waitingListRepository;
+    private final AppConfig config;
 
     @Override
     public ResponseWaitingListDTO create(CreateWaitingListDTO requestDTO) {
+        int capacity = requestDTO.capacity() != 0 ? requestDTO.capacity() : config.getCapacity();
+        OrderingStrategy orderingStrategy = requestDTO.orderingStrategy() != null ? requestDTO.orderingStrategy() : OrderingStrategy.valueOf(config.getOrderingStrategy());
         WaitingList waitingList = createWaitingListMapper.toE(requestDTO);
+        waitingList.setCapacity(capacity);
+        waitingList.setOrderingStrategy(orderingStrategy);
         waitingListRepository.save(waitingList);
         return responseWaitingListMapper.toOT(waitingList);
     }
@@ -77,12 +84,8 @@ public class WaitingListServiceImpl implements WaitingListService {
             existingWaitingList.setServiceTime(updateWaitingListDTO.serviceTime());
         }
         log.info("updated ordering strategy if not null: {}", existingWaitingList.getOrderingStrategy());
-        try {
-            waitingListRepository.save(existingWaitingList);
-            log.info("saved transaction");
-        } catch (IllegalArgumentException illegalArgumentException) {
-            throw new RuntimeException("Exception Message: "+illegalArgumentException.getMessage()+"\nException cause: "+illegalArgumentException.getCause());
-        }
+
+        waitingListRepository.save(existingWaitingList);
         return responseWaitingListMapper.toOT(existingWaitingList);
     }
 

@@ -83,7 +83,7 @@ public class IdExistsConstraintValidator implements ConstraintValidator<IdExists
         }
 
         try {
-            String jpql = String.format("SELECT COUNT(e) FROM %s e WHERE e.id = :id", entityClass.getSimpleName());
+            String jpql = String.format("SELECT COUNT(e) FROM %s e WHERE e.%s = :id", entityClass.getSimpleName(), field);
             log.info("Executing JPQL: {}", jpql);
             Long count = entityManager.createQuery(jpql, Long.class)
                 .setParameter("id", id)

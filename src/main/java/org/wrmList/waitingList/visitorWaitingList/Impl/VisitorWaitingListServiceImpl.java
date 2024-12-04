@@ -13,20 +13,20 @@ import org.wrmList.waitingList.util.enums.ServiceTime;
 import org.wrmList.waitingList.util.enums.VisitorStatus;
 import org.wrmList.waitingList.visitor.entity.Visitor;
 import org.wrmList.waitingList.visitor.repository.VisitorRepository;
-import org.wrmList.waitingList.visitorWaitingList.dto.CreateVisitorWaitingListDTO;
-import org.wrmList.waitingList.visitorWaitingList.dto.ResponseVisitorWaitingListDTO;
-import org.wrmList.waitingList.visitorWaitingList.dto.UpdateVisitorWaitingListDTO;
+import org.wrmList.waitingList.visitorWaitingList.dto.request.CreateVisitorWaitingListDTO;
+import org.wrmList.waitingList.visitorWaitingList.dto.response.ResponseVisitorWaitingListDTO;
+import org.wrmList.waitingList.visitorWaitingList.dto.request.UpdateVisitorWaitingListDTO;
 import org.wrmList.waitingList.visitorWaitingList.entity.VisitorWaitingList;
-import org.wrmList.waitingList.visitorWaitingList.entity.embeddable.VisitKey;
-import org.wrmList.waitingList.visitorWaitingList.mapper.CreateVisitorWaitingListMapper;
-import org.wrmList.waitingList.visitorWaitingList.mapper.ResponseVisitorWaitingListMapper;
+import org.wrmList.waitingList.visitorWaitingList.entity.VisitKey;
+import org.wrmList.waitingList.visitorWaitingList.mapper.request.CreateVisitorWaitingListMapper;
+import org.wrmList.waitingList.visitorWaitingList.mapper.response.ResponseVisitorWaitingListMapper;
 import org.wrmList.waitingList.visitorWaitingList.repository.VisitorWaitingListRepository;
 import org.wrmList.waitingList.visitorWaitingList.service.VisitorWaitingListService;
+import org.wrmList.waitingList.visitorWaitingList.service.VisitorWaitingListValidateService;
 import org.wrmList.waitingList.waitingList.entity.WaitingList;
 import org.wrmList.waitingList.waitingList.repository.WaitingListRepository;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
@@ -43,67 +43,8 @@ public class VisitorWaitingListServiceImpl implements VisitorWaitingListService 
     private final VisitorWaitingListRepository visitorWaitingListRepository;
     private final VisitorRepository visitorRepository;
     private final WaitingListRepository waitingListRepository;
+    private final VisitorWaitingListValidateService visitorWaitingListValidateService;
 
-    Integer countVisits(List<VisitorWaitingList> visitorWaitingLists) {
-        return  visitorWaitingLists
-                .size();
-    }
-
-    void isValidVisit(VisitorWaitingList visitorWaitingList) {
-        List<VisitorWaitingList> visitorWaitingLists = visitorWaitingListRepository.findByWaitingListOrderByArrivalTimeAsc(visitorWaitingList.getWaitingList());
-        int capacity = visitorWaitingList.getWaitingList().getCapacity();
-        if(capacity <= countVisits(visitorWaitingLists)) {
-            throw new InvalidDataException("can't add new visit, out of waiting list capacity!");
-        }
-
-        isValidDate(visitorWaitingList);
-        isValidTime(visitorWaitingList);
-        isValidTimeDifference(visitorWaitingList);
-
-    }
-
-    void isValidTime(VisitorWaitingList visitorWaitingList) {
-        ServiceTime serviceTime = visitorWaitingList.getWaitingList().getServiceTime();
-        LocalTime arrivalTime = visitorWaitingList.getArrivalTime().toLocalTime();
-        String message = "Arrival time is not allowed!";
-        switch (serviceTime) {
-            case MORNING -> {
-                if( arrivalTime.isBefore(LocalTime.of(8, 30)) | arrivalTime.isAfter(LocalTime.of(12, 30))) {
-                    throw new InvalidDataException(message);
-                }
-
-            }
-
-            case AFTERNOON -> {
-                if( arrivalTime.isBefore(LocalTime.of(14, 30)) | arrivalTime.isAfter(LocalTime.of(18, 30))) {
-                    throw new InvalidDataException(message);
-                }
-
-            }
-
-            case CONTINUOUSLY -> {
-                if( arrivalTime.isBefore(LocalTime.of(8, 30)) | arrivalTime.isAfter(LocalTime.of(18, 30)) ) {
-                    throw new InvalidDataException(message);
-                }
-            }
-        }
-
-    }
-
-    void isValidDate(VisitorWaitingList visitorWaitingList) {
-        LocalDate waitingListDate = visitorWaitingList.getWaitingList().getDate();
-        LocalDate visitorWaitingListDate = visitorWaitingList.getArrivalTime().toLocalDate();
-
-        if(!visitorWaitingListDate.isEqual(waitingListDate)) {
-            throw new InvalidDataException("Arrival date is not allowed!");
-        }
-    }
-
-    void isValidTimeDifference(VisitorWaitingList visitorWaitingList) {
-        if(!visitorWaitingList.getArrivalTime().toLocalTime().isBefore(visitorWaitingList.getStartTime()) && !visitorWaitingList.getEndTime().isAfter(visitorWaitingList.getStartTime())) {
-            throw new InvalidDataException("arrival time should not surpass start time, and start time should not surpass end time!");
-        }
-    }
 
     @Override
     public ResponseVisitorWaitingListDTO create(CreateVisitorWaitingListDTO requestDTO) {
@@ -117,8 +58,7 @@ public class VisitorWaitingListServiceImpl implements VisitorWaitingListService 
     
         visitorWaitingList.setVisitor(visitor);
         visitorWaitingList.setWaitingList(waitingList);
-
-        isValidVisit(visitorWaitingList);
+        visitorWaitingListValidateService.createValidate(visitorWaitingList);
 
         visitorWaitingListRepository.save(visitorWaitingList);
             return responseMapper.toOT(visitorWaitingList);
@@ -160,12 +100,15 @@ public class VisitorWaitingListServiceImpl implements VisitorWaitingListService 
     public ResponseVisitorWaitingListDTO updateById(UpdateVisitorWaitingListDTO updateDTO) {
         VisitKey visitKey = new VisitKey(updateDTO.visitorId(), updateDTO.waitingListId());
         VisitorWaitingList visitorWaitingList = visitorWaitingListRepository.findByIdOrThrow(visitKey);
+        log.info("got on arrive date");
         if(updateDTO.arrivalTime() != null) {
             visitorWaitingList.setArrivalTime(updateDTO.arrivalTime());
         }
+
         if(updateDTO.visitorStatus() != null) {
             visitorWaitingList.setVisitorStatus(updateDTO.visitorStatus());
         }
+        log.info("got on start time");
         if(updateDTO.startTime() != null) {
             visitorWaitingList.setStartTime(updateDTO.startTime());
         }
@@ -183,7 +126,7 @@ public class VisitorWaitingListServiceImpl implements VisitorWaitingListService 
             visitorWaitingList.setEpt(updateDTO.ept());
         }
 
-        isValidTimeDifference(visitorWaitingList);
+        visitorWaitingListValidateService.updateValidate(visitorWaitingList);
         visitorWaitingListRepository.save(visitorWaitingList);
         return responseMapper.toOT(visitorWaitingList);
     }

@@ -1,12 +1,10 @@
 package org.wrmList.waitingList.visitorWaitingList.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.wrmList.waitingList.shared.exception.ResourceNotFoundException;
 import org.wrmList.waitingList.visitorWaitingList.entity.VisitorWaitingList;
-import org.wrmList.waitingList.visitorWaitingList.entity.embeddable.VisitKey;
+import org.wrmList.waitingList.visitorWaitingList.entity.VisitKey;
 import org.wrmList.waitingList.waitingList.entity.WaitingList;
 
 import java.util.List;

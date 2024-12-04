@@ -47,7 +47,7 @@ public class WaitingList {
     @Column(name = "capacity")
     @NotNull
     @Min(1)
-    private int capacity = 100;
+    private int capacity;
 
     @OneToMany(mappedBy = "waitingList", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<VisitorWaitingList> visitorWaitingLists = new ArrayList<>();

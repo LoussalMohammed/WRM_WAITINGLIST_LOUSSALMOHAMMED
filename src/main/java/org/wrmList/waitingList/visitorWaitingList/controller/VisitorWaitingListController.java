@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.*;
 import org.wrmList.waitingList.common.controller.BaseController;
 import org.wrmList.waitingList.common.service.BaseService;
 import org.wrmList.waitingList.util.annotation.IdExists;
-import org.wrmList.waitingList.visitorWaitingList.dto.CreateVisitorWaitingListDTO;
-import org.wrmList.waitingList.visitorWaitingList.dto.ResponseVisitorWaitingListDTO;
-import org.wrmList.waitingList.visitorWaitingList.dto.UpdateVisitorWaitingListDTO;
+import org.wrmList.waitingList.visitorWaitingList.dto.request.CreateVisitorWaitingListDTO;
+import org.wrmList.waitingList.visitorWaitingList.dto.response.ResponseVisitorWaitingListDTO;
+import org.wrmList.waitingList.visitorWaitingList.dto.request.UpdateVisitorWaitingListDTO;
+import org.wrmList.waitingList.visitorWaitingList.entity.VisitKey;
 import org.wrmList.waitingList.visitorWaitingList.entity.VisitorWaitingList;
-import org.wrmList.waitingList.visitorWaitingList.entity.embeddable.VisitKey;
 import org.wrmList.waitingList.visitorWaitingList.service.VisitorWaitingListService;
 
 import org.wrmList.waitingList.waitingList.entity.WaitingList;
 
-import java.time.LocalTime;
-import java.util.List;
+import java.time.*;
+import java.util.*;
 
 @RestController
 @RequestMapping("/visitorWaitingList")
@@ -40,34 +40,34 @@ public class VisitorWaitingListController extends BaseController<VisitorWaitingL
 
     @PatchMapping("/id")
     @ResponseStatus(HttpStatus.OK)
-    ResponseVisitorWaitingListDTO updateById(@RequestBody UpdateVisitorWaitingListDTO updateVisitorWaitingListDTO) {
+    ResponseVisitorWaitingListDTO updateById(@RequestBody UpdateVisitorWaitingListDTO updateVisitorWaitingListDTO)   {
         return visitorWaitingListService.updateById(updateVisitorWaitingListDTO);
     }
 
     @GetMapping("/id")
     @ResponseStatus(HttpStatus.OK)
-    ResponseVisitorWaitingListDTO findById(@RequestBody VisitKey id) {
+    ResponseVisitorWaitingListDTO findById(@IdExists(entityClass = VisitorWaitingList.class, field = "id") @RequestBody VisitKey id) {
         return visitorWaitingListService.findById(id);
     }
 
     @DeleteMapping("/id")
     @ResponseStatus(HttpStatus.OK)
-    void deleteById(@RequestBody VisitKey id) {
+    void deleteById(@IdExists(entityClass = VisitorWaitingList.class, field = "id") @RequestBody VisitKey id) {
         visitorWaitingListService.deleteById(id);
     }
 
     @PatchMapping("/setInProgress")
-    public ResponseEntity<ResponseVisitorWaitingListDTO> setInProgress(@IdExists(entityClass = VisitorWaitingListController.class, field = "visitKey") @RequestBody VisitKey id) {
+    public ResponseEntity<ResponseVisitorWaitingListDTO> setInProgress(@IdExists(entityClass = VisitorWaitingList.class, field = "id") @RequestBody VisitKey id) {
         return ResponseEntity.ok(visitorWaitingListService.setInProgressById(id));
     }
 
     @PatchMapping("/setDone")
-    public ResponseEntity<ResponseVisitorWaitingListDTO> setDone(@IdExists(entityClass = VisitorWaitingListController.class, field = "visitKey") @RequestBody VisitKey id) {
+    public ResponseEntity<ResponseVisitorWaitingListDTO> setDone(@IdExists(entityClass = VisitorWaitingList.class, field = "id") @RequestBody VisitKey id) {
         return ResponseEntity.ok(visitorWaitingListService.setDone(id));
     }
 
     @PatchMapping("/setCanceled")
-    public ResponseEntity<ResponseVisitorWaitingListDTO> setCanceled(@IdExists(entityClass = VisitorWaitingListController.class, field = "visitKey") @RequestBody VisitKey id) {
+    public ResponseEntity<ResponseVisitorWaitingListDTO> setCanceled(@IdExists(entityClass = VisitorWaitingList.class, field = "id") @RequestBody VisitKey id) {
         return ResponseEntity.ok(visitorWaitingListService.setCanceled(id));
     }
 

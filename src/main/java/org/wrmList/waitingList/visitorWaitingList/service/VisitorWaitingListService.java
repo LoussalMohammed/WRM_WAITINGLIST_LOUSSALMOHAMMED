@@ -1,12 +1,10 @@
 package org.wrmList.waitingList.visitorWaitingList.service;
 
-import org.springframework.data.domain.Pageable;
 import org.wrmList.waitingList.common.service.BaseService;
-import org.wrmList.waitingList.shared.dto.response.PageResponse;
-import org.wrmList.waitingList.visitorWaitingList.dto.CreateVisitorWaitingListDTO;
-import org.wrmList.waitingList.visitorWaitingList.dto.ResponseVisitorWaitingListDTO;
-import org.wrmList.waitingList.visitorWaitingList.dto.UpdateVisitorWaitingListDTO;
-import org.wrmList.waitingList.visitorWaitingList.entity.embeddable.VisitKey;
+import org.wrmList.waitingList.visitorWaitingList.dto.request.CreateVisitorWaitingListDTO;
+import org.wrmList.waitingList.visitorWaitingList.dto.response.ResponseVisitorWaitingListDTO;
+import org.wrmList.waitingList.visitorWaitingList.dto.request.UpdateVisitorWaitingListDTO;
+import org.wrmList.waitingList.visitorWaitingList.entity.VisitKey;
 
 import java.time.LocalTime;
 import java.util.List;

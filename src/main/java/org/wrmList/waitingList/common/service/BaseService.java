@@ -3,8 +3,6 @@ package org.wrmList.waitingList.common.service;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.wrmList.waitingList.shared.dto.response.PageResponse;
-import org.wrmList.waitingList.visitorWaitingList.dto.ResponseVisitorWaitingListDTO;
-import org.wrmList.waitingList.visitorWaitingList.entity.embeddable.VisitKey;
 
 import java.util.Map;
 

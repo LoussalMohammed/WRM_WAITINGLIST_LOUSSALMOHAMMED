@@ -2,6 +2,7 @@ package org.wrmList.waitingList.util.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,10 +18,9 @@ import java.time.Duration;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class AlgorithmeFieldConstraintValidator implements ConstraintValidator<ValidateAlgorithmeFields, Object> {
-
-    @Autowired
-    private WaitingListRepository waitingListRepository;
+    private final WaitingListRepository waitingListRepository;
     
     private String wlIdField;
     private String pfField;

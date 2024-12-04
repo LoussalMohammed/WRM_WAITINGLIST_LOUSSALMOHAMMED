@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.wrmList.waitingList.common.controller.BaseController;
 import org.wrmList.waitingList.common.service.BaseService;
-import org.wrmList.waitingList.visitor.dto.CreateVisitorDTO;
-import org.wrmList.waitingList.visitor.dto.ResponseVisitorDTO;
-import org.wrmList.waitingList.visitor.dto.UpdateVisitorDTO;
+import org.wrmList.waitingList.visitor.dto.request.CreateVisitorDTO;
+import org.wrmList.waitingList.visitor.dto.response.ResponseVisitorDTO;
+import org.wrmList.waitingList.visitor.dto.request.UpdateVisitorDTO;
 import org.wrmList.waitingList.visitor.entity.Visitor;
 import org.wrmList.waitingList.visitor.service.VisitorService;
 

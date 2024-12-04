@@ -6,11 +6,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
-import org.wrmList.waitingList.visitor.dto.CreateVisitorDTO;
-import org.wrmList.waitingList.visitor.dto.ResponseVisitorDTO;
+import org.wrmList.waitingList.visitor.dto.request.CreateVisitorDTO;
+import org.wrmList.waitingList.visitor.dto.response.ResponseVisitorDTO;
 import org.wrmList.waitingList.visitor.entity.Visitor;
-import org.wrmList.waitingList.visitor.mapper.CreateVisitorMapper;
-import org.wrmList.waitingList.visitor.mapper.ResponseVisitorMapper;
+import org.wrmList.waitingList.visitor.mapper.request.CreateVisitorMapper;
+import org.wrmList.waitingList.visitor.mapper.response.ResponseVisitorMapper;
 import org.wrmList.waitingList.visitor.repository.VisitorRepository;
 
 import java.util.ArrayList;

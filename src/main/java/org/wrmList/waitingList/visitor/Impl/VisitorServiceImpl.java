@@ -7,12 +7,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.wrmList.waitingList.shared.dto.response.PageResponse;
-import org.wrmList.waitingList.visitor.dto.ResponseVisitorDTO;
+import org.wrmList.waitingList.visitor.dto.response.ResponseVisitorDTO;
 import org.wrmList.waitingList.visitor.entity.Visitor;
-import org.wrmList.waitingList.visitor.dto.CreateVisitorDTO;
-import org.wrmList.waitingList.visitor.dto.UpdateVisitorDTO;
-import org.wrmList.waitingList.visitor.mapper.CreateVisitorMapper;
-import org.wrmList.waitingList.visitor.mapper.ResponseVisitorMapper;
+import org.wrmList.waitingList.visitor.dto.request.CreateVisitorDTO;
+import org.wrmList.waitingList.visitor.dto.request.UpdateVisitorDTO;
+import org.wrmList.waitingList.visitor.mapper.request.CreateVisitorMapper;
+import org.wrmList.waitingList.visitor.mapper.response.ResponseVisitorMapper;
 import org.wrmList.waitingList.visitor.repository.VisitorRepository;
 import org.wrmList.waitingList.visitor.service.VisitorService;
 
