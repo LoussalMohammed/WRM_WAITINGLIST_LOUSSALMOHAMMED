@@ -6,6 +6,8 @@ import org.wrmList.waitingList.visitorWaitingList.entity.VisitorWaitingList;
 
 import java.util.List;
 
+// Create Visitor DTO
+
 public record CreateVisitorDTO(
         @Size(max = 15, min = 2)
         @NotBlank
