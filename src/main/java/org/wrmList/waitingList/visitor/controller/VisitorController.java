@@ -11,6 +11,8 @@ import org.wrmList.waitingList.visitor.dto.request.UpdateVisitorDTO;
 import org.wrmList.waitingList.visitor.entity.Visitor;
 import org.wrmList.waitingList.visitor.service.VisitorService;
 
+// Visitor Controller
+
 @RestController
 @RequestMapping("/visitor")
 @RequiredArgsConstructor
