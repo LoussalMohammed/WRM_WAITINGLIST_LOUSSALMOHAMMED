@@ -9,6 +9,7 @@ import org.wrmList.waitingList.visitorWaitingList.entity.VisitKey;
 import java.time.LocalTime;
 import java.util.List;
 
+// Visitor Waiting List Service
 
 public interface VisitorWaitingListService extends BaseService<Long, CreateVisitorWaitingListDTO, UpdateVisitorWaitingListDTO, ResponseVisitorWaitingListDTO> {
     ResponseVisitorWaitingListDTO findById(VisitKey id);
