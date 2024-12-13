@@ -14,6 +14,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+// Response Visitor Waiting List DTO
+
 public record ResponseVisitorWaitingListDTO(
         EmbeddableVisitorDTO visitor,
         EmbeddableWaitingListDTO waitingList,
