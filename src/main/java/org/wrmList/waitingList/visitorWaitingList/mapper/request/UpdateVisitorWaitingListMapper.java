@@ -1,4 +1,4 @@
-package org.wrmList.waitingList.visitorWaitingList.mapper.response;
+package org.wrmList.waitingList.visitorWaitingList.mapper.request;
 
 import org.mapstruct.Mapper;
 import org.wrmList.waitingList.common.mapper.BaseMapper;
