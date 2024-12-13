@@ -6,6 +6,7 @@ import org.wrmList.waitingList.shared.dto.response.PageResponse;
 
 import java.util.Map;
 
+//Base Service
 public interface BaseService<Long, C, U, R> {
     R create(@Valid C requestDTO);
     PageResponse<R> findAll(Pageable pageable, Map<String, String> filters);
