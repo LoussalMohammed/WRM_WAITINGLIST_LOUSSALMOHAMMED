@@ -21,6 +21,8 @@ import org.wrmList.waitingList.waitingList.entity.WaitingList;
 import java.time.*;
 import java.util.*;
 
+// Visitor Waiting List Controller
+
 @RestController
 @RequestMapping("/visitorWaitingList")
 @RequiredArgsConstructor
