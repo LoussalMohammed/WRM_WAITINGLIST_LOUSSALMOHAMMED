@@ -6,6 +6,7 @@ import org.wrmList.waitingList.util.validation.IdExistsConstraintValidator;
 
 import java.lang.annotation.*;
 
+// Id Exists Annotation
 @Target({ElementType.PARAMETER, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = IdExistsConstraintValidator.class)
