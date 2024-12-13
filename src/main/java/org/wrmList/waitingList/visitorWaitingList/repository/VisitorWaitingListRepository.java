@@ -9,6 +9,8 @@ import org.wrmList.waitingList.waitingList.entity.WaitingList;
 
 import java.util.List;
 
+// Visitor Waiting List Repository
+
 @Repository
 public interface VisitorWaitingListRepository extends JpaRepository<VisitorWaitingList, VisitKey> {
     default VisitorWaitingList findByIdOrThrow(VisitKey id) {
