@@ -9,7 +9,7 @@ import org.wrmList.waitingList.shared.dto.response.PageResponse;
 import org.wrmList.waitingList.shared.exception.ResourceNotFoundException;
 
 import java.util.Map;
-
+//Base Service Impl
 public abstract class BaseServiceImpl<E, Long, C, U, R, V> implements BaseService<Long, C, U, R> {
     protected final JpaRepository<E, Long> repository;
     protected final BaseMapper<C, E> createMapper;
