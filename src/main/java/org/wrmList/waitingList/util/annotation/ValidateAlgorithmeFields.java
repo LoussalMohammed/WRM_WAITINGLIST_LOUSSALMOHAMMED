@@ -6,6 +6,7 @@ import org.wrmList.waitingList.util.validation.AlgorithmeFieldConstraintValidato
 
 import java.lang.annotation.*;
 
+// Validate Algorithme Fields
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = AlgorithmeFieldConstraintValidator.class)
