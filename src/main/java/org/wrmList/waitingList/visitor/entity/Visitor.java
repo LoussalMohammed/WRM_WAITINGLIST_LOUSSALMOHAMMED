@@ -15,6 +15,8 @@ import org.wrmList.waitingList.visitorWaitingList.entity.VisitorWaitingList;
 import java.util.ArrayList;
 import java.util.List;
 
+// Visitor Entity
+
 @Entity(name = "Visitor")
 @Table(name = "visitors")
 @NoArgsConstructor
