@@ -6,6 +6,7 @@ import org.wrmList.waitingList.util.validation.UniqueConstraintValidator;
 
 import java.lang.annotation.*;
 
+// Unique
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = UniqueConstraintValidator.class)
