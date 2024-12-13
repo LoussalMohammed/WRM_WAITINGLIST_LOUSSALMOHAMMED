@@ -12,6 +12,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+// Update Visitor Waiting List DTO
+
 @ValidateAlgorithmeFields
 public record UpdateVisitorWaitingListDTO(
         LocalDateTime arrivalTime,
