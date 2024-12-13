@@ -7,6 +7,7 @@ import org.wrmList.waitingList.visitorWaitingList.dto.response.EmbeddableVisitor
 
 import java.util.List;
 
+// Response Visitor DTO
 
 public record ResponseVisitorDTO(
         @NotNull
