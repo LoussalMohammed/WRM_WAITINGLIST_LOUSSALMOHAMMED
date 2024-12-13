@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 import static org.wrmList.waitingList.shared.constant.ErrorCodes.*;
 
+// Global Exception Handler
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
