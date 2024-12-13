@@ -8,6 +8,8 @@ import org.wrmList.waitingList.util.annotation.ValidateAlgorithmeFields;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+// Create Visitor Waiting List DTO
+
 public record  CreateVisitorWaitingListDTO(
         LocalDateTime arrivalTime,
 
