@@ -5,6 +5,8 @@ import jakarta.validation.ConstraintValidatorContext;
 import lombok.extern.slf4j.Slf4j;
 import org.wrmList.waitingList.util.annotation.Unique;
 
+// Unique Constraint Validator
+
 @Slf4j
 public class UniqueConstraintValidator implements ConstraintValidator<Unique, String> {
     
