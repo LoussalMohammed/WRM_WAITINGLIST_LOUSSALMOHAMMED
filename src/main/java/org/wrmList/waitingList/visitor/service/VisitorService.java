@@ -6,6 +6,8 @@ import org.wrmList.waitingList.visitor.dto.request.CreateVisitorDTO;
 import org.wrmList.waitingList.visitor.dto.response.ResponseVisitorDTO;
 import org.wrmList.waitingList.visitor.dto.request.UpdateVisitorDTO;
 
+// Visitor Service
+
 @Service
 public interface VisitorService extends BaseService<Long, CreateVisitorDTO, UpdateVisitorDTO, ResponseVisitorDTO> {
 
