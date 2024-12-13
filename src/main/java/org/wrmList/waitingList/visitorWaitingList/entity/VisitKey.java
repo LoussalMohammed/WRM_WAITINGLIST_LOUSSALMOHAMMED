@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+// Embeddable Visit Key
+
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
