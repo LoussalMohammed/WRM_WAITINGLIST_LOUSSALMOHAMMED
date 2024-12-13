@@ -16,6 +16,8 @@ import org.wrmList.waitingList.waitingList.repository.WaitingListRepository;
 import java.lang.reflect.Field;
 import java.time.Duration;
 
+// Algorithme Fields Validator
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
