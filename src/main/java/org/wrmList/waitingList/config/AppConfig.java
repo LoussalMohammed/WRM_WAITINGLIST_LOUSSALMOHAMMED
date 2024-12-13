@@ -3,6 +3,7 @@ package org.wrmList.waitingList.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+// App Config
 @Component
 @ConfigurationProperties(prefix = "default")
 public class AppConfig {
