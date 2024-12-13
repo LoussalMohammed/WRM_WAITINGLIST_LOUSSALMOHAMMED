@@ -5,6 +5,8 @@ import org.wrmList.waitingList.common.mapper.BaseMapper;
 import org.wrmList.waitingList.visitorWaitingList.dto.request.CreateVisitorWaitingListDTO;
 import org.wrmList.waitingList.visitorWaitingList.entity.VisitorWaitingList;
 
+// Create Visitor Waiting List Mapper
+
 @Mapper(componentModel = "spring")
 public interface CreateVisitorWaitingListMapper extends BaseMapper<VisitorWaitingList, CreateVisitorWaitingListDTO> {
 }
