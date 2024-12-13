@@ -18,6 +18,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+// Visitor Waiting List
+
 @Entity(name = "VisitorWaitingList")
 @Table(name = "visitorsWaitingLists")
 @NoArgsConstructor
